@@ -1,0 +1,4 @@
+*.class
+*.jar
+Test.java
+saves/*
