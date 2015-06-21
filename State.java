@@ -16,7 +16,7 @@ public class State implements Serializable
     this.y = y;
     this.label = label;
     this.initial = initial;
-    this.color = Style.defaultStateColor;
+    this.color = Style.STATE_COLOR;
   }
 
   public int getX()
@@ -37,6 +37,11 @@ public class State implements Serializable
   public boolean getInitial()
   {
     return this.initial;
+  }
+
+  public Color getColor()
+  {
+    return this.color;
   }
 
   public void setLabel(String label)

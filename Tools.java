@@ -1,7 +1,7 @@
 import java.util.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import java.awt.event.*;
+import java.awt.geom.*;
 import javax.swing.*;
 
 public class Tools extends JFrame
@@ -41,8 +41,7 @@ public class Tools extends JFrame
     toolAddTransition = new JButton("[+]Transição");
     toolRemoveTransition = new JButton("[-]Transição");
 
-    defaults();
-    toolSelect.setBackground(Style.selectedButtonColor);
+    changeStyle(toolSelect);
 
     add(toolNew);
     add(toolSave);
@@ -86,9 +85,7 @@ public class Tools extends JFrame
       public void actionPerformed(ActionEvent e)
       {
         tool = 1;
-        JButton button = (JButton) e.getSource();
-        defaults();
-        button.setBackground(Style.selectedButtonColor);
+        changeStyle((JButton) e.getSource());
       }
     });
 
@@ -97,9 +94,7 @@ public class Tools extends JFrame
       public void actionPerformed(ActionEvent e)
       {
         tool = 2;
-        JButton button = (JButton) e.getSource();
-        defaults();
-        button.setBackground(Style.selectedButtonColor);
+        changeStyle((JButton) e.getSource());
       }
     });
 
@@ -108,9 +103,7 @@ public class Tools extends JFrame
       public void actionPerformed(ActionEvent e)
       {
         tool = 3;
-        JButton button = (JButton) e.getSource();
-        defaults();
-        button.setBackground(Style.selectedButtonColor);
+        changeStyle((JButton) e.getSource());
       }
     });
 
@@ -119,9 +112,7 @@ public class Tools extends JFrame
       public void actionPerformed(ActionEvent e)
       {
         tool = 4;
-        JButton button = (JButton) e.getSource();
-        defaults();
-        button.setBackground(Style.selectedButtonColor);
+        changeStyle((JButton) e.getSource());
       }
     });
 
@@ -130,9 +121,7 @@ public class Tools extends JFrame
       public void actionPerformed(ActionEvent e)
       {
         tool = 5;
-        JButton button = (JButton) e.getSource();
-        defaults();
-        button.setBackground(Style.selectedButtonColor);
+        changeStyle((JButton) e.getSource());
       }
     });
   }
@@ -142,24 +131,54 @@ public class Tools extends JFrame
     return this.tool;
   }
 
-  public void defaults()
+  public void changeStyle(JButton button)
   {
     /*Button colors*/
-    toolNew.setBackground(Style.defaultButtonColor);
-    toolSave.setBackground(Style.defaultButtonColor);
-    toolOpen.setBackground(Style.defaultButtonColor);
-    toolSelect.setBackground(Style.defaultButtonColor);
-    toolAddState.setBackground(Style.defaultButtonColor);
-    toolRemoveState.setBackground(Style.defaultButtonColor);
-    toolAddTransition.setBackground(Style.defaultButtonColor);
-    toolRemoveTransition.setBackground(Style.defaultButtonColor);
+    toolNew.setBackground(Style.BUTTON_COLOR);
+    toolSave.setBackground(Style.BUTTON_COLOR);
+    toolOpen.setBackground(Style.BUTTON_COLOR);
+    toolSelect.setBackground(Style.BUTTON_COLOR);
+    toolAddState.setBackground(Style.BUTTON_COLOR);
+    toolRemoveState.setBackground(Style.BUTTON_COLOR);
+    toolAddTransition.setBackground(Style.BUTTON_COLOR);
+    toolRemoveTransition.setBackground(Style.BUTTON_COLOR);
+
+    button.setBackground(Style.BUTTON_SELECTED_COLOR);
 
     /*Main objects*/
-    // if(this.main.stateA != null){this.main.stateA.color = new Color(255, 132, 0);}
-    // if(this.main.stateB != null){this.main.stateB.color = new Color(255, 132, 0);}
-    // if(this.main.stateSelected != null){this.main.stateSelected.color = new Color(255, 132, 0);}
-    // this.main.stateA = null;
-    // this.main.stateB = null;
-    // this.main.stateSelected = null;
+    if(main.stateOrigin != null)
+      main.stateOrigin.setColor(Style.STATE_COLOR);
+    if(main.stateDestination != null)
+      main.stateDestination.setColor(Style.STATE_COLOR);
+    if(main.stateSelected != null)
+      main.stateSelected.setColor(Style.STATE_COLOR);
+
+    main.stateOrigin = null;
+    main.stateDestination = null;
+    main.stateSelected = null;
+  }
+
+  public State selectState(MouseEvent e)
+  {
+    Ellipse2D clickedPoint = new Ellipse2D.Float();
+    Ellipse2D stateArea = new Ellipse2D.Float();
+    clickedPoint.setFrame(e.getX(), e.getY(), 1, 1);
+
+    State state = null;
+
+    for(State s : main.automaton.getStates())
+    {
+      stateArea.setFrame(s.getX(), s.getY(), Style.W, Style.H);
+      Area clickedArea = new Area(stateArea);
+      clickedArea.intersect(new Area(clickedPoint));
+      if(!clickedArea.isEmpty())
+      {
+        state = s;
+      }
+    }
+    
+    if(state != null)
+      state.setColor(Style.STATE_SELECTED_COLOR);
+    return state;
   }
 }

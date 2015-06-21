@@ -7,14 +7,16 @@ import javax.swing.JFrame;
 
 public class Main extends JFrame implements MouseListener, MouseMotionListener
 {
+  int WINDOW_WIDTH = 800;
+  int WINDOW_HEIGHT = 500;
+  int FPS = 30;
   BufferedImage bufferedImage;
-  private int FPS = 30;
-  private int WINDOW_WIDTH = 800;
-  private int WINDOW_HEIGHT = 500;
   Graphics2D g2dFrame;
-  Graphics2D g2dBuffer;
-
+  //Graphics2D g2dBuffer;
+  Graphx graphx;
   Tools tools;
+  Automaton automaton;
+  State stateSelected, stateOrigin, stateDestination;
 
   public void init()
   {
@@ -27,32 +29,30 @@ public class Main extends JFrame implements MouseListener, MouseMotionListener
     setLocation(0, 100);
     bufferedImage = new BufferedImage(WINDOW_WIDTH, WINDOW_HEIGHT, BufferedImage.TYPE_INT_RGB);
 
-    g2dFrame = (Graphics2D) getGraphics();
-    g2dBuffer = (Graphics2D) bufferedImage.getGraphics();
-    g2dBuffer.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
     addMouseListener(this);
     addMouseMotionListener(this);
 
+    g2dFrame = (Graphics2D) getGraphics();
+    graphx = new Graphx(this);
     tools = new Tools(this);
+    automaton = new Automaton();
+    stateSelected = null;
+    stateOrigin = null;
+    stateDestination = null;
+
+    /*Test*/
+    State s1 = new State(3 * Style.W, 2 * Style.H, "AAA", true);
+    State s2 = new State(7 * Style.W, 2 * Style.H, "BBB", false);
+    automaton.addState(s1);
+    automaton.addState(s2);
+    automaton.addTransition(new Transition(s1, s2, "hello"));
+    //automaton.addTransition(new Transition(s2, s1, "hello"));
   }
 
   public void display()
   { 
-    /* Set background color */
-    g2dBuffer.setColor(Style.BACKGROUND);
-    g2dBuffer.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
-    
-    /* Draw grid */
-    g2dBuffer.setColor(Style.BORDER);
-    g2dBuffer.setStroke(new BasicStroke(1));
-
-    for(int i = 30; i < WINDOW_WIDTH; i += 30)
-      g2dBuffer.drawLine(i, 0, i, WINDOW_WIDTH);
-
-    for(int i = 30; i < WINDOW_HEIGHT; i += 30)
-      g2dBuffer.drawLine(0, i, WINDOW_WIDTH, i);
-    
+    graphx.grid();
+    graphx.automaton();
     g2dFrame.drawImage(bufferedImage, 0, 0, this);
   }
 
@@ -76,6 +76,13 @@ public class Main extends JFrame implements MouseListener, MouseMotionListener
   {
     if(tools.getTool() == 1) /*Select state*/
     {
+      if(stateSelected == null)
+      {
+        stateSelected = tools.selectState(e);
+      }else{
+        stateSelected.setColor(Style.STATE_COLOR);
+        stateSelected = null;
+      }
     }
 
     if(tools.getTool() == 2) /*Add state*/
@@ -103,16 +110,16 @@ public class Main extends JFrame implements MouseListener, MouseMotionListener
 
   public void mouseMoved(MouseEvent e)
   {
-    // if(tools.getTool() == 1)
-    // {
-    //   if(stateSelected != null)
-    //   {
-    //     stateSelected.offset(
-    //       e.getX() - (e.getX() % 15), 
-    //       e.getY() - (e.getY() % 15)
-    //     );
-    //   }
-    // }
+    if(tools.getTool() == 1)
+    {
+      if(stateSelected != null)
+      {
+        stateSelected.offset(
+          e.getX() - (e.getX() % (Style.W / 2)), 
+          e.getY() - (e.getY() % (Style.H / 2))
+        );
+      }
+    }
   }
 
   public static void main(String[] args)
