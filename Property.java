@@ -11,7 +11,11 @@ public class Property extends JFrame
   Main main;
 
   private JLabel label;
-  private JTextField stateLabel;
+  private JLabel labelInitial;
+  
+  JTextField stateLabel;
+  JCheckBox isInitial;
+  private JButton apply;
 
   public Property(Main main)
   {
@@ -20,16 +24,42 @@ public class Property extends JFrame
     setResizable(false);
     getContentPane().setBackground(Style.BACKGROUND);
     setDefaultCloseOperation(EXIT_ON_CLOSE);
-    setLayout(new FlowLayout());
+    setLayout(new FlowLayout(FlowLayout.RIGHT));
     setLocation(810, 0);
-    setVisible(true);
     
     this.main = main;
 
     label = new JLabel("Rótulo:");
     stateLabel = new JTextField();
+    stateLabel.setColumns(12);
+    
+    labelInitial = new JLabel("Inicial:");
+    isInitial = new JCheckBox();
+    isInitial.setBackground(Style.BUTTON_COLOR);
+
+    apply = new JButton("Aplicar");
+    apply.setBackground(Style.BUTTON_COLOR);
 
     add(label);
     add(stateLabel);
+    
+    add(labelInitial);
+    add(isInitial);
+    
+    add(apply);
+
+    apply.addActionListener(new ActionListener()
+    {
+      public void actionPerformed(ActionEvent e)
+      {
+        if(main.stateSelected != null)
+        {
+          main.stateSelected.setLabel(stateLabel.getText());
+          main.stateSelected.setInitial(isInitial.isSelected());
+        }
+      }
+    });
+    
+    setVisible(true);
   }
 }

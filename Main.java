@@ -25,17 +25,17 @@ public class Main extends JFrame implements MouseListener, MouseMotionListener
     setResizable(false);
     setDefaultCloseOperation(EXIT_ON_CLOSE);
     setLayout(null);
-    setVisible(true);
     setLocation(0, 100);
     bufferedImage = new BufferedImage(WINDOW_WIDTH, WINDOW_HEIGHT, BufferedImage.TYPE_INT_RGB);
+    setVisible(true);
 
     addMouseListener(this);
     addMouseMotionListener(this);
 
     g2dFrame = (Graphics2D) getGraphics();
     graphx = new Graphx(bufferedImage);
-    tools = new Tools(this);
     property = new Property(this);
+    tools = new Tools(this);
     automaton = new Automaton();
     stateSelected = null;
     stateOrigin = null;
@@ -54,6 +54,7 @@ public class Main extends JFrame implements MouseListener, MouseMotionListener
     automaton.addTransition(new Transition(x, z, "g"));
     automaton.addTransition(new Transition(z, y, "a,g"));
     automaton.addTransition(new Transition(y, x, "a"));
+    
   }
 
   public void display()
@@ -81,7 +82,22 @@ public class Main extends JFrame implements MouseListener, MouseMotionListener
 
   public void mouseClicked(MouseEvent e)
   {
-    if(tools.getTool() == 1) /*Select state*/
+    if(tools.getTool() == 0) /*Select state*/
+    {
+      if(stateSelected == null)
+      {
+        stateSelected = tools.selectState(e);
+        property.stateLabel.setText(stateSelected.getLabel());
+        property.isInitial.setSelected(stateSelected.getInitial());
+      }else{
+        stateSelected.setColor(Style.STATE_COLOR);
+        stateSelected = null;
+        property.stateLabel.setText("");
+        property.isInitial.setSelected(false);
+      }
+    }
+
+    if(tools.getTool() == 1) /*Move state*/
     {
       if(stateSelected == null)
       {

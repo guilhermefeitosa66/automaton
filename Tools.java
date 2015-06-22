@@ -12,6 +12,7 @@ public class Tools extends JFrame
   private JButton toolSave;
   private JButton toolOpen;
   private JButton toolSelect;
+  private JButton toolMove;
   private JButton toolAddState;
   private JButton toolRemoveState;
   private JButton toolAddTransition;
@@ -28,15 +29,15 @@ public class Tools extends JFrame
     setDefaultCloseOperation(EXIT_ON_CLOSE);
     setLayout(new FlowLayout());
     setLocation(0, 0);
-    setVisible(true);
     
-    this.tool = 1;
+    this.tool = 0;
     this.main = main;
 
     toolNew = new JButton("Novo");
     toolSave = new JButton("Salvar");
     toolOpen = new JButton("Abrir");
-    toolSelect = new JButton("Mover");
+    toolSelect = new JButton("Selecionar");
+    toolMove = new JButton("Mover");
     toolAddState = new JButton("[+]Estado");
     toolRemoveState = new JButton("[-]Estado");
     toolAddTransition = new JButton("[+]Transição");
@@ -48,6 +49,7 @@ public class Tools extends JFrame
     add(toolSave);
     add(toolOpen);
     add(toolSelect);
+    add(toolMove);
     add(toolAddState);
     add(toolRemoveState);
     add(toolAddTransition);
@@ -82,6 +84,15 @@ public class Tools extends JFrame
     });
 
     toolSelect.addActionListener(new ActionListener()
+    {
+      public void actionPerformed(ActionEvent e)
+      {
+        tool = 0;
+        changeStyle((JButton) e.getSource());
+      }
+    });
+
+    toolMove.addActionListener(new ActionListener()
     {
       public void actionPerformed(ActionEvent e)
       {
@@ -125,6 +136,8 @@ public class Tools extends JFrame
         changeStyle((JButton) e.getSource());
       }
     });
+
+    setVisible(true);
   }
 
   public int getTool()
@@ -139,6 +152,7 @@ public class Tools extends JFrame
     toolSave.setBackground(Style.BUTTON_COLOR);
     toolOpen.setBackground(Style.BUTTON_COLOR);
     toolSelect.setBackground(Style.BUTTON_COLOR);
+    toolMove.setBackground(Style.BUTTON_COLOR);
     toolAddState.setBackground(Style.BUTTON_COLOR);
     toolRemoveState.setBackground(Style.BUTTON_COLOR);
     toolAddTransition.setBackground(Style.BUTTON_COLOR);
@@ -157,6 +171,8 @@ public class Tools extends JFrame
     main.stateOrigin = null;
     main.stateDestination = null;
     main.stateSelected = null;
+    main.property.stateLabel.setText("");
+    main.property.isInitial.setSelected(false);
   }
 
   public State selectState(MouseEvent e)
