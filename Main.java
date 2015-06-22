@@ -6,7 +6,7 @@ import javax.swing.*;
 
 public class Main extends JFrame implements MouseListener, MouseMotionListener
 {
-  int WINDOW_WIDTH = 800;
+  int WINDOW_WIDTH = 900;
   int WINDOW_HEIGHT = 500;
   int FPS = 30;
   BufferedImage bufferedImage;
@@ -15,6 +15,7 @@ public class Main extends JFrame implements MouseListener, MouseMotionListener
   Graphx graphx;
   Tools tools;
   Property property;
+  Function function;
   Automaton automaton;
   State stateSelected, stateOrigin, stateDestination;
 
@@ -35,6 +36,7 @@ public class Main extends JFrame implements MouseListener, MouseMotionListener
     g2dFrame = (Graphics2D) getGraphics();
     graphx = new Graphx(bufferedImage);
     property = new Property(this);
+    function = new Function(this);
     tools = new Tools(this);
     automaton = new Automaton();
     stateSelected = null;

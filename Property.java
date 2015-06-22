@@ -7,7 +7,7 @@ import javax.swing.*;
 public class Property extends JFrame
 {
   private int WINDOW_WIDTH = 300;
-  private int WINDOW_HEIGHT = 576;
+  private int WINDOW_HEIGHT = 150;
   Main main;
 
   private JLabel label;
@@ -25,7 +25,7 @@ public class Property extends JFrame
     getContentPane().setBackground(Style.BACKGROUND);
     setDefaultCloseOperation(EXIT_ON_CLOSE);
     setLayout(new FlowLayout(FlowLayout.RIGHT));
-    setLocation(810, 0);
+    setLocation(910, 0);
     
     this.main = main;
 

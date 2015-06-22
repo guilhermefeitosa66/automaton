@@ -6,7 +6,7 @@ import javax.swing.*;
 
 public class Tools extends JFrame
 {
-  private int WINDOW_WIDTH = 800;
+  private int WINDOW_WIDTH = 900;
   private int WINDOW_HEIGHT = 65;
   private JButton toolNew;
   private JButton toolSave;
