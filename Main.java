@@ -14,6 +14,7 @@ public class Main extends JFrame implements MouseListener, MouseMotionListener
   //Graphics2D g2dBuffer;
   Graphx graphx;
   Tools tools;
+  Property property;
   Automaton automaton;
   State stateSelected, stateOrigin, stateDestination;
 
@@ -32,8 +33,9 @@ public class Main extends JFrame implements MouseListener, MouseMotionListener
     addMouseMotionListener(this);
 
     g2dFrame = (Graphics2D) getGraphics();
-    graphx = new Graphx(this);
+    graphx = new Graphx(bufferedImage);
     tools = new Tools(this);
+    property = new Property(this);
     automaton = new Automaton();
     stateSelected = null;
     stateOrigin = null;
@@ -57,7 +59,7 @@ public class Main extends JFrame implements MouseListener, MouseMotionListener
   public void display()
   { 
     graphx.grid();
-    graphx.automaton();
+    graphx.drawAutomaton(automaton);
     g2dFrame.drawImage(bufferedImage, 0, 0, this);
   }
 

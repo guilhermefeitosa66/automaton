@@ -24,10 +24,11 @@ public class Tools extends JFrame
     setTitle("Automatos - Ferramentas");
     setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
     setResizable(false);
+    getContentPane().setBackground(Style.BACKGROUND);
     setDefaultCloseOperation(EXIT_ON_CLOSE);
-    setVisible(true);
-    setLocation(0, 0);
     setLayout(new FlowLayout());
+    setLocation(0, 0);
+    setVisible(true);
     
     this.tool = 1;
     this.main = main;

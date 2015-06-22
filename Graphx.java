@@ -6,13 +6,13 @@ import java.net.*;
 
 public class Graphx
 {
+  BufferedImage bufferedImage;
   Graphics2D g2dBuffer;
-  Main main;
 
-  public Graphx(Main main)
+  public Graphx(BufferedImage bufferedImage)
   {
-    this.main = main;
-    g2dBuffer = (Graphics2D) this.main.bufferedImage.getGraphics();
+    this.bufferedImage = bufferedImage;
+    g2dBuffer = (Graphics2D) bufferedImage.getGraphics();
     g2dBuffer.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
   }
 
@@ -20,17 +20,17 @@ public class Graphx
   {
     /* Draw background */
     g2dBuffer.setColor(Style.BACKGROUND);
-    g2dBuffer.fillRect(0, 0, main.WINDOW_WIDTH, main.WINDOW_HEIGHT);
+    g2dBuffer.fillRect(0, 0, bufferedImage.getWidth(), bufferedImage.getHeight());
     
     /* Draw grid */
     g2dBuffer.setColor(Style.BORDER);
     g2dBuffer.setStroke(new BasicStroke(1));
 
-    for(int i = Style.W; i < main.WINDOW_WIDTH; i += Style.W)
-      g2dBuffer.drawLine(i, 0, i, main.WINDOW_WIDTH);
+    for(int i = Style.W; i < bufferedImage.getWidth(); i += Style.W)
+      g2dBuffer.drawLine(i, 0, i, bufferedImage.getWidth());
 
-    for(int i = Style.H; i < main.WINDOW_HEIGHT; i += Style.H)
-      g2dBuffer.drawLine(0, i, main.WINDOW_WIDTH, i);
+    for(int i = Style.H; i < bufferedImage.getHeight(); i += Style.H)
+      g2dBuffer.drawLine(0, i, bufferedImage.getWidth(), i);
   }
 
   public void drawState(State state)
@@ -54,7 +54,6 @@ public class Graphx
 
   public void drawTransition(Transition transition)
   {
-
     /*Line offset*/
     int x1 = transition.getOrigin().getX() + (Style.W / 2);
     int y1 = transition.getOrigin().getY() + (Style.H / 2);
@@ -99,11 +98,16 @@ public class Graphx
     }
   }
 
-  public void automaton()
+  public void drawAutomaton(Automaton automaton)
   {
-    for(Transition transition : main.automaton.getTransitions())
-      drawTransition(transition);
-    for(State state : main.automaton.getStates())
-      drawState(state);
+    int size = automaton.getTransitions().size(); //avoid ConcurrentModificationException
+
+    for(int i = 0; i < size; i++)
+      drawTransition(automaton.getTransitions().get(i));
+
+    size = automaton.getStates().size(); //avoid ConcurrentModificationException
+
+    for(int i = 0; i < size; i++)
+      drawState(automaton.getStates().get(i));
   }
 }
