@@ -94,7 +94,7 @@ public class Main extends JFrame implements MouseListener, MouseMotionListener
     {
       String label = JOptionPane.showInputDialog(this, "Rótulo:");
 
-      while(label.equals(""))
+      while(label == "")
       {
         JOptionPane.showMessageDialog(this, "O rótulo não pode ficar em branco!", "Obs!", JOptionPane.WARNING_MESSAGE);
         label = JOptionPane.showInputDialog(this, "Rótulo:");
@@ -132,7 +132,7 @@ public class Main extends JFrame implements MouseListener, MouseMotionListener
           stateDestination = state;
           String label = JOptionPane.showInputDialog(this, "Rótulo:");
 
-          while(label.equals(""))
+          while(label == "")
           {
             JOptionPane.showMessageDialog(this, "O rótulo não pode ficar em branco!", "Obs!", JOptionPane.WARNING_MESSAGE);
             label = JOptionPane.showInputDialog(this, "Rótulo:");
