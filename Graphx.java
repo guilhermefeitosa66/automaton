@@ -54,7 +54,6 @@ public class Graphx
 
   public void drawTransition(Transition transition)
   {
-    g2dBuffer.setColor(Style.TRANSITION_BORDER);
 
     /*Line offset*/
     int x1 = transition.getOrigin().getX() + (Style.W / 2);
@@ -68,13 +67,36 @@ public class Graphx
     int yb = (int) (y2 - Math.sin(ang / 180.0 * Math.PI) * a) - 5;
     /*Arrow offset by Lapixo*/
 
-    g2dBuffer.drawLine(x1, y1, x2, y2);
-    g2dBuffer.fillOval(xb, yb, 10, 10);
+    if(transition.getOrigin() != transition.getDestination())
+    {
+      g2dBuffer.setColor(Style.TRANSITION_BORDER);
+      g2dBuffer.drawLine(x1, y1, x2, y2);
+      g2dBuffer.fillOval(xb, yb, 10, 10);
 
-    g2dBuffer.setColor(Style.TRANSITION_TEXT);
-    g2dBuffer.setFont(Style.FONT);
-    
-    g2dBuffer.drawString(transition.getLabel(), (x1 + x2) / 2, (y1 + y2) / 2);
+      g2dBuffer.setColor(Style.TRANSITION_TEXT);
+      g2dBuffer.setFont(Style.FONT);
+      g2dBuffer.drawString(transition.getLabel(), (x1 + x2) / 2, (y1 + y2) / 2);
+    }else{ 
+      g2dBuffer.setColor(Style.TRANSITION_BORDER);
+      g2dBuffer.drawRoundRect(
+        x1 - Style.W,
+        (int) (y1 - (Style.H * 0.3)),
+        Style.W,
+        (int) (Style.H * 0.6),
+        (int) (Style.W * 0.6),
+        (int) (Style.H * 0.6)
+      );
+
+      g2dBuffer.fillOval(
+        x1 - (Style.W / 2) - 5,
+        (int) (y1 - (Style.H * 0.3) - 5),
+        10, 10
+      );
+
+      g2dBuffer.setColor(Style.TRANSITION_TEXT);
+      g2dBuffer.setFont(Style.FONT);
+      g2dBuffer.drawString(transition.getLabel(), x1 - (Style.W) - (8 * transition.getLabel().length()), y1 + 5);
+    }
   }
 
   public void automaton()

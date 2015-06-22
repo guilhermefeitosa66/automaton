@@ -181,4 +181,13 @@ public class Tools extends JFrame
       state.setColor(Style.STATE_SELECTED_COLOR);
     return state;
   }
+
+  public boolean existsState(String label)
+  {
+    boolean exists = false;
+    for(State state : main.automaton.getStates())
+      if(state.getLabel().equals(label))
+        exists = true;
+    return exists;
+  }
 }

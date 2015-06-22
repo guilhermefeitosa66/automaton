@@ -14,7 +14,12 @@ public class State implements Serializable
   {
     this.x = x;
     this.y = y;
-    this.label = label;
+
+    if(label == null)
+      this.label = "";
+    else
+      this.label = label;
+
     this.initial = initial;
     this.color = Style.STATE_COLOR;
   }
@@ -69,7 +74,8 @@ public class State implements Serializable
   {
     if(state == null)
       return false;
-    else if(state.label == this.label && state.initial == this.initial)
+    //else if(state.label == this.label && state.initial == this.initial)
+    else if(state.label.equals(this.label))
       return true;
     else
       return false;
@@ -79,11 +85,4 @@ public class State implements Serializable
   {
     return new State(this.x, this.y, this.label, this.initial);
   }
-
-  // public Ellipse2D shape()
-  // {
-  //   Ellipse2D s = new Ellipse2D.Float();
-  //   s.setFrame(this.x, this.y, 30, 30);
-  //   return s;
-  // }
 }

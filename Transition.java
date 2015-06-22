@@ -10,7 +10,11 @@ public class Transition implements Serializable
   {
     this.origin = origin;
     this.destination = destination;
-    this.label = label;
+    
+    if(label == null)
+      this.label = "";
+    else
+      this.label = label;
   }
 
   public State getOrigin()
@@ -41,5 +45,15 @@ public class Transition implements Serializable
   public void setLabel(String label)
   {
     this.label = label;
+  }
+
+  public boolean equals(Transition transition)
+  {
+    boolean equal = false;
+
+    if(transition.getOrigin().equals(origin) && transition.getDestination().equals(destination))
+      equal = true;
+    
+    return equal;
   }
 }

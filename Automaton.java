@@ -60,13 +60,65 @@ public class Automaton implements Serializable
     this.states.add(state);
   }
 
-  public void addTransition(Transition transition)
+  public boolean addTransition(Transition transition)
   {
-    this.transitions.add(transition);
+    boolean exists = false;
+
+    for(int i = transitions.size() - 1; i >= 0; i--)
+    {
+      if(transitions.get(i).equals(transition))
+      {
+        exists = true;
+        transitions.get(i).setLabel(transition.getLabel());
+        updateAlfabeto();
+      }
+    }
+
+    if(!exists)
+    {
+      this.transitions.add(transition);
+      if(!alfabeto.contains(transition.getLabel()))
+        alfabeto.add(transition.getLabel());
+    }
+    return exists;
   }
 
-  public void addAlfabeto(String alfabeto)
+  public void updateAlfabeto()
   {
-    this.alfabeto.add(alfabeto);
+    alfabeto = new ArrayList<String>();
+
+    for(Transition t : transitions)
+      if(!alfabeto.contains(t.getLabel()))
+        alfabeto.add(t.getLabel());
+    
+    for(String s : alfabeto)
+      System.out.println("alfabeto: " + s);
+    System.out.println("----------------");
+  }
+
+  public boolean existsState(String label)
+  {
+    boolean exists = false;
+    for(State state : states)
+      if(state.getLabel().equals(label))
+        exists = true;
+    return exists;
+  }
+
+  public void removeState(State state)
+  {
+    if(state != null)
+    {
+      for(int i = transitions.size() - 1; i >= 0; i--)
+        if(transitions.get(i).getOrigin().getLabel().equals(state.getLabel()) || transitions.get(i).getDestination().getLabel().equals(state.getLabel()))
+          transitions.remove(i);
+
+      for(int i = states.size() - 1; i >= 0; i--)
+        if(states.get(i).getLabel().equals(state.getLabel()))
+          states.remove(i);
+
+      updateAlfabeto();
+      state = null;
+    }
   }
 }

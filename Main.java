@@ -3,7 +3,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import javax.swing.*;
-import javax.swing.JFrame;
 
 public class Main extends JFrame implements MouseListener, MouseMotionListener
 {
@@ -41,12 +40,18 @@ public class Main extends JFrame implements MouseListener, MouseMotionListener
     stateDestination = null;
 
     /*Test*/
-    State s1 = new State(3 * Style.W, 2 * Style.H, "AAA", true);
-    State s2 = new State(7 * Style.W, 2 * Style.H, "BBB", false);
-    automaton.addState(s1);
-    automaton.addState(s2);
-    automaton.addTransition(new Transition(s1, s2, "hello"));
-    //automaton.addTransition(new Transition(s2, s1, "hello"));
+    State x = new State(5 * Style.W, 1 * Style.H, "X", false);
+    State y = new State(8 * Style.W, 3 * Style.H, "Y", true);
+    State z = new State(5 * Style.W, 5 * Style.H, "Z", false);
+    automaton.addState(x);
+    automaton.addState(y);
+    automaton.addState(z);
+    automaton.addTransition(new Transition(x, x, "a"));
+    automaton.addTransition(new Transition(y, y, "b"));
+    automaton.addTransition(new Transition(z, z, "b"));
+    automaton.addTransition(new Transition(x, z, "g"));
+    automaton.addTransition(new Transition(z, y, "a,g"));
+    automaton.addTransition(new Transition(y, x, "a"));
   }
 
   public void display()
@@ -87,14 +92,71 @@ public class Main extends JFrame implements MouseListener, MouseMotionListener
 
     if(tools.getTool() == 2) /*Add state*/
     {
+      String label = JOptionPane.showInputDialog(this, "Rótulo:");
+
+      while(label.equals(""))
+      {
+        JOptionPane.showMessageDialog(this, "O rótulo não pode ficar em branco!", "Obs!", JOptionPane.WARNING_MESSAGE);
+        label = JOptionPane.showInputDialog(this, "Rótulo:");
+      }
+
+      if(label != null)
+      {
+        if(automaton.existsState(label))
+          JOptionPane.showMessageDialog(this, "Já existe um estado com esse rótulo!", "Woops!", JOptionPane.ERROR_MESSAGE);
+        else
+          automaton.addState(new State(
+            e.getX() - (Style.W / 2),
+            e.getY() - (Style.H / 2),
+            label,
+            true
+          ));
+      }
     }
 
     if(tools.getTool() == 3) /*Remove state*/
     {
+      automaton.removeState(tools.selectState(e));
     }
 
     if(tools.getTool() == 4) /*Add transition*/
     {
+      State state = tools.selectState(e);
+
+      if(state != null)
+      {
+        if(stateOrigin == null)
+        {
+          stateOrigin = state;
+        }else{
+          stateDestination = state;
+          String label = JOptionPane.showInputDialog(this, "Rótulo:");
+
+          while(label.equals(""))
+          {
+            JOptionPane.showMessageDialog(this, "O rótulo não pode ficar em branco!", "Obs!", JOptionPane.WARNING_MESSAGE);
+            label = JOptionPane.showInputDialog(this, "Rótulo:");
+          }
+
+          if(label != null)
+          {
+            Transition transition = new Transition(stateOrigin, stateDestination, label);
+            
+            if(automaton.addTransition(transition))
+              JOptionPane.showMessageDialog(this, "Essa trasição já existe!\nApenas o rótulo foi alterado.", "Obs!", JOptionPane.WARNING_MESSAGE);
+
+            stateOrigin.setColor(Style.STATE_COLOR);
+            stateDestination.setColor(Style.STATE_COLOR);
+            stateOrigin = null;
+            stateDestination = null;
+          }else{
+            stateOrigin.setColor(Style.STATE_COLOR);
+            stateDestination.setColor(Style.STATE_COLOR);
+            stateOrigin = null;
+            stateDestination = null;
+          }
+        }
+      }
     }
 
     if(tools.getTool() == 5) /*Remove transition*/
