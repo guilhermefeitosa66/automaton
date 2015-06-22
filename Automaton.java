@@ -83,6 +83,23 @@ public class Automaton implements Serializable
     return exists;
   }
 
+  public boolean removeTransition(Transition transition)
+  {
+    boolean remove = false;
+
+    for(int i = transitions.size() - 1; i >= 0; i--)
+    {
+      if(transitions.get(i).equals(transition))
+      {
+        remove = true;
+        transitions.remove(i);
+        updateAlfabeto();
+      }
+    }
+
+    return remove;
+  }
+
   public void updateAlfabeto()
   {
     alfabeto = new ArrayList<String>();

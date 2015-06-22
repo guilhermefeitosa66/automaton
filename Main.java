@@ -161,6 +161,24 @@ public class Main extends JFrame implements MouseListener, MouseMotionListener
 
     if(tools.getTool() == 5) /*Remove transition*/
     {
+      State state = tools.selectState(e);
+
+      if(state != null)
+      {
+        if(stateOrigin == null)
+        {
+          stateOrigin = state;
+        }else{
+          stateDestination = state;
+          Transition transition = new Transition(stateOrigin, stateDestination, null);
+          automaton.removeTransition(transition);
+
+          stateOrigin.setColor(Style.STATE_COLOR);
+          stateDestination.setColor(Style.STATE_COLOR);
+          stateOrigin = null;
+          stateDestination = null;          
+        }
+      }
     }
   }
  
