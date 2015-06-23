@@ -6,19 +6,20 @@ public class Open
 {
   public Automaton open(String fileName)
   {
-    Automaton automaton;
+    Automaton automaton = null;
+
     try
     {
-      FileInputStream file = new FileInputStream("saves/" + fileName + ".automaton");
+      FileInputStream file = new FileInputStream("saves/" + fileName + ".aut");
       ObjectInputStream object = new ObjectInputStream(file);
       automaton = (Automaton) object.readObject();
       object.close();
       System.out.println("opened!");
-      return automaton;
     }catch(Exception e){
       System.out.println("error opening...");
-      //return null;
-      return new Automaton();
+      automaton = null;
     }
+
+    return automaton;
   }
 }

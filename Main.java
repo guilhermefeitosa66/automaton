@@ -18,10 +18,11 @@ public class Main extends JFrame implements MouseListener, MouseMotionListener
   Function function;
   Automaton automaton;
   State stateSelected, stateOrigin, stateDestination;
+  String fileName = null;
 
   public void init()
   {
-    setTitle("Automatos");
+    setTitle("Automato - Novo automato não salvo");
     setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
     setResizable(false);
     setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -44,19 +45,18 @@ public class Main extends JFrame implements MouseListener, MouseMotionListener
     stateDestination = null;
 
     /*Test*/
-    State x = new State(5 * Style.W, 1 * Style.H, "X", false);
-    State y = new State(8 * Style.W, 3 * Style.H, "Y", true);
-    State z = new State(5 * Style.W, 5 * Style.H, "Z", false);
-    automaton.addState(x);
-    automaton.addState(y);
-    automaton.addState(z);
-    automaton.addTransition(new Transition(x, x, "a"));
-    automaton.addTransition(new Transition(y, y, "b"));
-    automaton.addTransition(new Transition(z, z, "b"));
-    automaton.addTransition(new Transition(x, z, "g"));
-    automaton.addTransition(new Transition(z, y, "a,g"));
-    automaton.addTransition(new Transition(y, x, "a"));
-    
+    // State x = new State(5 * Style.W, 1 * Style.H, "X", false);
+    // State y = new State(8 * Style.W, 3 * Style.H, "Y", true);
+    // State z = new State(5 * Style.W, 5 * Style.H, "Z", false);
+    // automaton.addState(x);
+    // automaton.addState(y);
+    // automaton.addState(z);
+    // automaton.addTransition(new Transition(x, x, "a"));
+    // automaton.addTransition(new Transition(y, y, "b"));
+    // automaton.addTransition(new Transition(z, z, "b"));
+    // automaton.addTransition(new Transition(x, z, "g"));
+    // automaton.addTransition(new Transition(z, y, "a,g"));
+    // automaton.addTransition(new Transition(y, x, "a"));
   }
 
   public void display()
@@ -114,7 +114,7 @@ public class Main extends JFrame implements MouseListener, MouseMotionListener
     {
       String label = JOptionPane.showInputDialog(this, "Rótulo:");
 
-      while(label == "")
+      while("".equals(label))
       {
         JOptionPane.showMessageDialog(this, "O rótulo não pode ficar em branco!", "Obs!", JOptionPane.WARNING_MESSAGE);
         label = JOptionPane.showInputDialog(this, "Rótulo:");
@@ -152,7 +152,7 @@ public class Main extends JFrame implements MouseListener, MouseMotionListener
           stateDestination = state;
           String label = JOptionPane.showInputDialog(this, "Rótulo:");
 
-          while(label == "")
+          while("".equals(label))
           {
             JOptionPane.showMessageDialog(this, "O rótulo não pode ficar em branco!", "Obs!", JOptionPane.WARNING_MESSAGE);
             label = JOptionPane.showInputDialog(this, "Rótulo:");

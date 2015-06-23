@@ -59,7 +59,9 @@ public class Tools extends JFrame
     {
       public void actionPerformed(ActionEvent e)
       {
-        //main.grafo = new Grafo();
+        main.automaton = new Automaton();
+        main.fileName = null;
+        main.setTitle("Automato - Novo automato não salvo");
       }
     });
 
@@ -67,9 +69,27 @@ public class Tools extends JFrame
     {
       public void actionPerformed(ActionEvent e)
       {
-        // String fileName = JOptionPane.showInputDialog(main, "Nome do arquivo");
-        // Save save = new Save();
-        // save.save(main.grafo, fileName);
+        Save save = new Save();
+
+        if(main.fileName == null)
+        {
+          String fileName = JOptionPane.showInputDialog(main, "Nome do arquivo:");
+
+          while("".equals(fileName))
+          {
+            JOptionPane.showMessageDialog(main, "O nome não pode ficar em branco!", "Obs!", JOptionPane.WARNING_MESSAGE);
+            fileName = JOptionPane.showInputDialog(main, "Nome do arquivo:");
+          }
+
+          if(fileName != null)
+          {
+            main.fileName = fileName;
+            save.save(main.automaton, main.fileName);
+            main.setTitle("Automato - " + fileName + ".aut");
+          }
+        }else{
+          save.save(main.automaton, main.fileName);
+        }
       }
     });
 
@@ -77,9 +97,27 @@ public class Tools extends JFrame
     {
       public void actionPerformed(ActionEvent e)
       {
-        // String fileName = JOptionPane.showInputDialog(main, "Nome do arquivo");
-        // Open open = new Open();
-        // main.grafo = open.open(fileName);
+        Open open = new Open();
+        String fileName = JOptionPane.showInputDialog(main, "Nome do arquivo:");
+
+        while("".equals(fileName))
+        {
+          JOptionPane.showMessageDialog(main, "O nome não pode ficar em branco!", "Obs!", JOptionPane.WARNING_MESSAGE);
+          fileName = JOptionPane.showInputDialog(main, "Nome do arquivo:");
+        }
+
+        if(fileName != null)
+        {
+          Automaton a = open.open(fileName);
+          if(a == null)
+          {
+            JOptionPane.showMessageDialog(main, "Esse arquivo não existe!", "Obs!", JOptionPane.WARNING_MESSAGE);
+          }else{
+            main.automaton = a;
+            main.fileName = fileName;
+            main.setTitle("Automato - " + fileName + ".aut");
+          }
+        }
       }
     });
 

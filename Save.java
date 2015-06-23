@@ -8,7 +8,7 @@ public class Save
   {
     try
     {
-      FileOutputStream file = new FileOutputStream("saves/" + fileName + ".automaton");
+      FileOutputStream file = new FileOutputStream("saves/" + fileName + ".aut");
       ObjectOutputStream object = new ObjectOutputStream(file);
       object.writeObject(automaton);
       object.close();
