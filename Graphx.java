@@ -98,6 +98,20 @@ public class Graphx
     }
   }
 
+  public void drawInitialState(State state)
+  {
+    int x = state.getX();
+    int y = state.getY();
+
+    int xArrow[] = {x - 8, x, x};
+    int yArrow[] = {y, y, y - 8};
+    
+    g2dBuffer.setColor(Style.ARROW);
+    g2dBuffer.setStroke(new BasicStroke(2));
+    g2dBuffer.drawPolyline(xArrow, yArrow, 3);
+    g2dBuffer.drawLine(x, y, x - 20, y - 20);
+  }
+
   public void drawAutomaton(Automaton automaton)
   {
     int size = automaton.getTransitions().size(); //avoid ConcurrentModificationException
@@ -109,5 +123,8 @@ public class Graphx
 
     for(int i = 0; i < size; i++)
       drawState(automaton.getStates().get(i));
+
+    if(automaton.getInitial() != null)
+      drawInitialState(automaton.getInitial());
   }
 }

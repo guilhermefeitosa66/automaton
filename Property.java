@@ -16,6 +16,7 @@ public class Property extends JFrame
   JTextField stateLabel;
   JCheckBox isInitial;
   private JButton apply;
+  private JButton setInitial;
 
   public Property(Main main)
   {
@@ -33,12 +34,15 @@ public class Property extends JFrame
     stateLabel = new JTextField();
     stateLabel.setColumns(12);
     
-    labelInitial = new JLabel("Inicial:");
+    labelInitial = new JLabel("Final:");
     isInitial = new JCheckBox();
     isInitial.setBackground(Style.BUTTON_COLOR);
 
     apply = new JButton("Aplicar");
+    setInitial = new JButton("Definir como inicial");
+
     apply.setBackground(Style.BUTTON_COLOR);
+    setInitial.setBackground(Style.BUTTON_COLOR);
 
     add(label);
     add(stateLabel);
@@ -46,6 +50,7 @@ public class Property extends JFrame
     add(labelInitial);
     add(isInitial);
     
+    add(setInitial);
     add(apply);
 
     apply.addActionListener(new ActionListener()
@@ -55,11 +60,22 @@ public class Property extends JFrame
         if(main.stateSelected != null)
         {
           main.stateSelected.setLabel(stateLabel.getText());
-          main.stateSelected.setInitial(isInitial.isSelected());
+          main.stateSelected.setInitial(!isInitial.isSelected());
         }
       }
     });
     
+    setInitial.addActionListener(new ActionListener()
+    {
+      public void actionPerformed(ActionEvent e)
+      {
+        if(main.stateSelected != null)
+        {
+          main.automaton.setInitial(main.stateSelected);
+        }
+      }
+    });
+
     setVisible(true);
   }
 }

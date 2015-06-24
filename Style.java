@@ -9,6 +9,7 @@ public class Style
   static Color STATE_SELECTED_COLOR = new Color(205, 82, 0);
   static Color STATE_BORDER = new Color(0, 0, 0);
   static Color TRANSITION_BORDER = new Color(100, 100, 100);
+  static Color ARROW = new Color(0, 0, 0);
 
   static Color BUTTON_COLOR = new Color(255, 255, 255);
   static Color BUTTON_SELECTED_COLOR = new Color(200, 200, 200);

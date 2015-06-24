@@ -31,7 +31,7 @@ public class Function extends JFrame
     setLocation(910, 180);
 
 
-    f1 = new JButton("AFN >> AFD");
+    f1 = new JButton("AFND => AFD");
     f2 = new JButton("TRIM");
     f3 = new JButton("Composição paralela");
     f4 = new JButton("Produto");

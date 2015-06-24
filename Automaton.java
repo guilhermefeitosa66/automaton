@@ -57,6 +57,8 @@ public class Automaton implements Serializable
 
   public void addState(State state)
   {
+    if(this.states.size() == 0)
+      this.initial = state;
     this.states.add(state);
   }
 

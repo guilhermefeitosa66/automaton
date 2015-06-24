@@ -86,11 +86,16 @@ public class Main extends JFrame implements MouseListener, MouseMotionListener
   {
     if(tools.getTool() == 0) /*Select state*/
     {
+
       if(stateSelected == null)
       {
         stateSelected = tools.selectState(e);
-        property.stateLabel.setText(stateSelected.getLabel());
-        property.isInitial.setSelected(stateSelected.getInitial());
+        
+        if(stateSelected != null)
+        {
+          property.stateLabel.setText(stateSelected.getLabel());
+          property.isInitial.setSelected(!stateSelected.getInitial());
+        }
       }else{
         stateSelected.setColor(Style.STATE_COLOR);
         stateSelected = null;
