@@ -35,6 +35,24 @@ public class Automaton implements Serializable
     return this.states;
   }
 
+  public ArrayList<State> getInitials()
+  {
+    ArrayList<State> initials = new ArrayList<State>();
+    for(int i = 0; i < states.size(); i++)
+      if(states.get(i).getInitial())
+        initials.add(states.get(i));
+    return initials;
+  }
+
+  public ArrayList<State> getFinals()
+  {
+    ArrayList<State> finals = new ArrayList<State>();
+    for(int i = 0; i < states.size(); i++)
+      if(!states.get(i).getInitial())
+        finals.add(states.get(i));
+    return finals;
+  }
+
   public ArrayList<Transition> getTransitions()
   {
     return this.transitions;
