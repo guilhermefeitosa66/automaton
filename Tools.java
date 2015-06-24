@@ -47,7 +47,7 @@ public class Tools extends JFrame
     toolRemoveTransition = new JButton("[-]Transição");
     
     chooser = new JFileChooser();
-    filter = new FileNameExtensionFilter("Automato", "aut", "AUT");
+    filter = new FileNameExtensionFilter("Automato *.out", "aut", "AUT");
     chooser.setFileFilter(filter);
 
     changeStyle(toolSelect);
@@ -91,12 +91,13 @@ public class Tools extends JFrame
 
           if(fileName != null)
           {
-            main.fileName = fileName;
+            main.fileName = fileName + ".out";
             save.save(main.automaton, main.fileName);
-            main.setTitle("Automato - " + fileName + ".aut");
+            main.setTitle("Automato - " + chooser.getSelectedFile().getName() + ".out");
           }
         }else{
           save.save(main.automaton, main.fileName);
+          JOptionPane.showMessageDialog(main, "Alterações slavas!", "Salvo!", JOptionPane.INFORMATION_MESSAGE);
         }
       }
     });
@@ -124,7 +125,7 @@ public class Tools extends JFrame
           }else{
             main.automaton = a;
             main.fileName = fileName;
-            main.setTitle("Automato - " + fileName + ".aut");
+            main.setTitle("Automato - " + chooser.getSelectedFile().getName());
           }
         }
       }

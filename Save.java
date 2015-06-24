@@ -9,7 +9,7 @@ public class Save
   {
     try
     {
-      FileOutputStream file = new FileOutputStream(url+".aut");
+      FileOutputStream file = new FileOutputStream(url);
       ObjectOutputStream object = new ObjectOutputStream(file);
       object.writeObject(automaton);
       object.close();
