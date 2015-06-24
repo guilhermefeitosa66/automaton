@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
 import javax.swing.*;
+import javax.swing.filechooser.*;
 
 public class Tools extends JFrame
 {
@@ -17,6 +18,8 @@ public class Tools extends JFrame
   private JButton toolRemoveState;
   private JButton toolAddTransition;
   private JButton toolRemoveTransition;
+  JFileChooser chooser;
+  FileNameExtensionFilter filter;
   private int tool;
   Main main;
 
@@ -42,6 +45,10 @@ public class Tools extends JFrame
     toolRemoveState = new JButton("[-]Estado");
     toolAddTransition = new JButton("[+]Transição");
     toolRemoveTransition = new JButton("[-]Transição");
+    
+    chooser = new JFileChooser();
+    filter = new FileNameExtensionFilter("Automato", "aut", "AUT");
+    chooser.setFileFilter(filter);
 
     changeStyle(toolSelect);
 
@@ -73,12 +80,13 @@ public class Tools extends JFrame
 
         if(main.fileName == null)
         {
-          String fileName = JOptionPane.showInputDialog(main, "Nome do arquivo:");
+          String fileName = null;
+          int returnVal = chooser.showSaveDialog(main);
 
-          while("".equals(fileName))
+          if(returnVal == JFileChooser.APPROVE_OPTION)
           {
-            JOptionPane.showMessageDialog(main, "O nome não pode ficar em branco!", "Obs!", JOptionPane.WARNING_MESSAGE);
-            fileName = JOptionPane.showInputDialog(main, "Nome do arquivo:");
+            fileName = chooser.getSelectedFile().getPath();
+            System.out.println("path: " + chooser.getSelectedFile().getPath());
           }
 
           if(fileName != null)
@@ -98,12 +106,13 @@ public class Tools extends JFrame
       public void actionPerformed(ActionEvent e)
       {
         Open open = new Open();
-        String fileName = JOptionPane.showInputDialog(main, "Nome do arquivo:");
+        String fileName = null;
+        int returnVal = chooser.showOpenDialog(main);
 
-        while("".equals(fileName))
+        if(returnVal == JFileChooser.APPROVE_OPTION)
         {
-          JOptionPane.showMessageDialog(main, "O nome não pode ficar em branco!", "Obs!", JOptionPane.WARNING_MESSAGE);
-          fileName = JOptionPane.showInputDialog(main, "Nome do arquivo:");
+          fileName = chooser.getSelectedFile().getPath();
+          System.out.println("path: " + chooser.getSelectedFile().getPath());
         }
 
         if(fileName != null)
@@ -111,7 +120,7 @@ public class Tools extends JFrame
           Automaton a = open.open(fileName);
           if(a == null)
           {
-            JOptionPane.showMessageDialog(main, "Esse arquivo não existe!", "Obs!", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(main, "Erro ao abrir arquivo!", "Obs!", JOptionPane.WARNING_MESSAGE);
           }else{
             main.automaton = a;
             main.fileName = fileName;

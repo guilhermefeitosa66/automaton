@@ -1,14 +1,15 @@
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.net.*;
 
 public class Save
 {
-  public void save(Automaton automaton, String fileName)
+  public void save(Automaton automaton, String url)
   {
     try
     {
-      FileOutputStream file = new FileOutputStream("saves/" + fileName + ".aut");
+      FileOutputStream file = new FileOutputStream(url+".aut");
       ObjectOutputStream object = new ObjectOutputStream(file);
       object.writeObject(automaton);
       object.close();
