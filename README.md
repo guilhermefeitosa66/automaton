@@ -1,7 +1,7 @@
 # to generate *.jar package run this command line:
-# => jar cmf manifest.txt app.jar *.class icons
+# => jar cmf manifest.txt app.jar *.class
 # or:
-# => jar cfve app.jar Main *.class icons
+# => jar cfve app.jar Main *.class
 
 # to run a jar file:
 # => java -jar app.jar

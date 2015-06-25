@@ -75,7 +75,7 @@ public class State implements Serializable
     if(state == null)
       return false;
     //else if(state.label == this.label && state.initial == this.initial)
-    else if(state.label.equals(this.label))
+    else if(state.getLabel().equals(this.label))
       return true;
     else
       return false;
