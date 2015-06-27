@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
 import javax.swing.*;
+import javax.swing.filechooser.*;
 
 public class Function extends JFrame
 {
@@ -15,6 +16,9 @@ public class Function extends JFrame
   private JButton f3;
   private JButton f4;
   private JButton f5;
+
+  JFileChooser chooser;
+  FileNameExtensionFilter filter;
 
   public Function(Main main)
   {
@@ -37,6 +41,11 @@ public class Function extends JFrame
     f4 = new JButton("Produto");
     f5 = new JButton("Minimizar");
 
+    chooser = new JFileChooser();
+    filter = new FileNameExtensionFilter("Automato *.aut", "aut", "AUT");
+    chooser.setFileFilter(filter);
+    chooser.setMultiSelectionEnabled(true);
+
     f1.setBackground(Style.BUTTON_COLOR);
     f2.setBackground(Style.BUTTON_COLOR);
     f3.setBackground(Style.BUTTON_COLOR);
@@ -50,5 +59,43 @@ public class Function extends JFrame
     add(f5);
 
     setVisible(true);
+
+    f3.addActionListener(new ActionListener()
+    {
+      public void actionPerformed(ActionEvent e)
+      {
+        Open open = new Open();
+        String fileNameA = null;
+        String fileNameB = null;
+        int returnVal = chooser.showOpenDialog(main);
+
+        if(returnVal == JFileChooser.APPROVE_OPTION)
+        {
+          if(chooser.getSelectedFiles().length >= 2)
+          {
+            fileNameA = chooser.getSelectedFiles()[0].getPath();
+            fileNameB = chooser.getSelectedFiles()[1].getPath();
+            System.out.println("path: " + fileNameA);
+            System.out.println("path: " + fileNameB);
+          }else{
+            JOptionPane.showMessageDialog(main, "Selecione pelo menos dois automatos!", "Obs!", JOptionPane.WARNING_MESSAGE);
+          }
+        }
+
+        if(fileNameA != null && fileNameB != null)
+        {
+          Automaton a = open.open(fileNameA);
+          Automaton b = open.open(fileNameB);
+          if(a == null || b == null)
+          {
+            JOptionPane.showMessageDialog(main, "Erro ao abrir arquivo!", "Obs!", JOptionPane.WARNING_MESSAGE);
+          }else{
+            main.automaton = new Operation().parallelComposition(a, b);
+            main.fileName = null;
+            main.setTitle("Automato - Composição paralela");
+          }
+        }
+      }
+    });
   }
 }

@@ -47,7 +47,7 @@ public class Tools extends JFrame
     toolRemoveTransition = new JButton("[-]Transição");
     
     chooser = new JFileChooser();
-    filter = new FileNameExtensionFilter("Automato *.out", "aut", "AUT");
+    filter = new FileNameExtensionFilter("Automato *.aut", "aut", "AUT");
     chooser.setFileFilter(filter);
 
     changeStyle(toolSelect);

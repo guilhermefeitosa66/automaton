@@ -2,11 +2,11 @@ import java.util.*;
 
 public class Operation
 {
-  public static Automaton AFNDtoAFD(){}
+  // public static Automaton AFNDtoAFD(){}
 
-  public static Automaton trim(){}
+  // public static Automaton trim(){}
 
-  public static Automaton parallelComposition(Automaton a, Automaton b)
+  public Automaton parallelComposition(Automaton a, Automaton b)
   {
     Automaton automaton = new Automaton();
 
@@ -34,9 +34,11 @@ public class Operation
         }
       }
     }/* Creating states END*/
+
+    return automaton;
   }
 
-  public static Automaton product(){}
+  // public static Automaton product(){}
 
-  public static Automaton minimize(){}
+  // public static Automaton minimize(){}
 }
