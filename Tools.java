@@ -91,9 +91,9 @@ public class Tools extends JFrame
 
           if(fileName != null)
           {
-            main.fileName = fileName + ".out";
+            main.fileName = fileName + ".aut";
             save.save(main.automaton, main.fileName);
-            main.setTitle("Automato - " + chooser.getSelectedFile().getName() + ".out");
+            main.setTitle("Automato - " + chooser.getSelectedFile().getName() + ".aut");
           }
         }else{
           save.save(main.automaton, main.fileName);

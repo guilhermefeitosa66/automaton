@@ -90,7 +90,8 @@ public class Function extends JFrame
           {
             JOptionPane.showMessageDialog(main, "Erro ao abrir arquivo!", "Obs!", JOptionPane.WARNING_MESSAGE);
           }else{
-            main.automaton = new Operation().parallelComposition(a, b);
+            AutOp o = new AutOp();
+            main.automaton = o.parallelComposition(a, b);
             main.fileName = null;
             main.setTitle("Automato - Composição paralela");
           }
